@@ -1,0 +1,51 @@
+/* Color Scheme
+--------------------------
+lightblue: #5491DC
+Orange: #F7B64B
+BrickRed: #570F12
+Red: #F00
+Gray: #DDD
+
+----------------------- */
+
+/* Table of contents
+--------------------------
+main styles
+form styles
+----------------------- */
+
+/* main styles */
+body {
+	width: 80%;
+	margin: 0 auto;
+}
+
+/* form styles */
+#addressForm {
+	width: 325px;
+	color: #5491DC;
+	font-weight: bold;
+}
+fieldset {
+	border: 2px solid #F7B64B;
+	border-radius: 5px;
+}
+legend {
+	font-size: .8em;
+	margin: 0 .2em;
+	padding: 0 .6em;
+}
+form label:nth-child(2) {
+	margin-top: .8em;
+}
+label, input {
+	display: block;
+}
+input {
+	margin-bottom: .8em;
+}
+input:last-child {
+	color: #5491DC;
+	font-weight: bold;
+	margin-bottom: 1em;
+}

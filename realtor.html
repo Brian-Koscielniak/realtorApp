@@ -1,21 +1,74 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-US">
 <head>
-	<meta name="charset" content="UTF-8">
+	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="realtorStyles.css">
 
 	<title>Realtor Application</title>
 </head>
 <body>
-	<form id="addressForm" method="get" autocomplete="on">
-		<fieldset>
-			<legend>Enter Property Address</legend>
-			<label for="address">Address:</label><input type="text" name="address" placeholder="100 Boredway" required autofocus />
-			<label for="city">City:</label><input type="text" name="city" placeholder="New York" required />
-			<label for="state">State:</label><input type="text" name="state" placeholder="NY" required />
-			<label for="zip">Zip:</label><input type="text" name="zip" placeholder="12345" pattern="^[0-9]{5}$" required />
-			<input type="submit" name="submit" value="Submit"/>
-		</fieldset>
-	</form>
+	<header>
+		<h1>My Properties</h1>
+	</header>
+	<main>
+		<section>
+			<form id="addressForm" method="get" autocomplete="on">
+				<fieldset>
+					<legend>Enter Property Address</legend>
+					<label for="address">Address:</label><input type="text" name="address" placeholder="100 Boredway" required autofocus />
+					<label for="city">City:</label><input type="text" name="city" placeholder="New York" required />
+					<label for="state">State:</label><input type="text" name="state" placeholder="NY" required />
+					<label for="zip">Zip:</label><input type="text" name="zip" placeholder="12345" pattern="^[0-9]{5}$" required />
+					<input type="submit" name="submit" value="Submit"/>
+				</fieldset>
+			</form>
+			<input type="button" value="Add Property To List"/>
+			<h1>My Properties List</h1>
+		</section>
+		<section id="tabSection">
+			<ul>
+				<li id="1" class="currentTab">Map</li>
+				<li id="2">Calc</li>
+				<li id="3">Comps</li>
+			</ul>
+			<div class="tab">
+				<p>A Map will go here</p>	
+			</div>			
+			<div class="tabHide">
+					<form id="loanForm" method="get" autocomplete="off">
+						<fieldset>
+							<legend>Loan Calculator</legend>
+							<label for="loanAmount">Loan Amount:</label><input type="text" name="loanAmount" required /></br>
+							<label for="interest">Interest:</label><input type="text" name="interest" required /></br>
+							<label for="numMonth">Number of Months:</label><input type="text" name="numMonth" required /></br>
+							<input type="submit" name="submit" value="Get Monthly Amount"/>
+						</fieldset>
+					</form>
+			</div>			
+			<div class="tabHide">
+				<p>A table will go here</p>	
+			</div>			
+		</section>
+	</main>
 </body>
+<script>
+//Add this script to the external.
+var tabList = document.querySelectorAll("#tabSection li");
+var tabContent = document.querySelectorAll("#tabSection div");
+for (i=0;i<tabList.length;i++){
+	tabList[i].addEventListener("click",toggleTab);
+}
+function toggleTab(){
+	for (i=0;i<tabList.length;i++){
+		tabContent[i].className = "tabHide";
+		tabList[i].className = "";
+	}
+	/* I would perfer to index rather than hard code numbers onto <li>. Do that */
+	tabContent[Number(this.id)-1].className = "tab";
+	this.className = "currentTab";
+}
+	
+</script>
 </html>
+<!--
+-->

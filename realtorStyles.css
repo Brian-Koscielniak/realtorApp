@@ -2,6 +2,8 @@
 --------------------------
 lightblue: #5491DC
 Orange: #F7B64B
+Yellowish: #FAFFBD
+The purp: #433E9C
 BrickRed: #570F12
 Red: #F00
 Gray: #DDD
@@ -11,21 +13,59 @@ Gray: #DDD
 /* Table of contents
 --------------------------
 main styles
+header 
 form styles
+tabsection
+tab
 ----------------------- */
 
 /* main styles */
 body {
-	width: 80%;
+	width: 1000px;
 	margin: 0 auto;
+	font-family: sans-serif;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+section {
+	float: left;
+}
+main {
+	padding: 1.4em 1em;
+	height: 600px;
+}
+section:first-child h1 {
+	margin: 0;
+	padding: 0;
+	color: #5491DC;
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 0%;
+}
+section:first-child input[type=button] {
+	margin: 2em 0 0 0;	
+	padding: 0;	
+	margin-bottom: 1em;
+	font-size: .6em;
+}
+/* header styles */
+header {
+	margin: 0;
+	background: #570F12;
+	height: 100px;
+	background: -webkit-linear-gradient(left, #570f12, #570f12, #FFF); 
+	background: -o-linear-gradient(right, #570f12, #570f12, #FFF); 
+	background: -moz-linear-gradient(right, #570f12, #570f12, #FFF); 
+	background: linear-gradient(to right, #570f12, #570f12, #FFF); 
+}
+header h1 {
+	margin: 0;
+	padding: .8em .3em;
+	font-size: 1.5em;
+	color: #fff;
 }
 
 /* form styles */
-#addressForm {
-	width: 325px;
-	color: #5491DC;
-	font-weight: bold;
-}
 fieldset {
 	border: 2px solid #F7B64B;
 	border-radius: 5px;
@@ -34,18 +74,84 @@ legend {
 	font-size: .8em;
 	margin: 0 .2em;
 	padding: 0 .6em;
-}
-form label:nth-child(2) {
-	margin-top: .8em;
-}
-label, input {
-	display: block;
+	color: #5491DC;
+	font-weight: bold;
 }
 input {
 	margin-bottom: .8em;
 }
-input:last-child {
+input[type=submit]{
 	color: #5491DC;
 	font-weight: bold;
 	margin-bottom: 1em;
+	font-size: .6em;
+}
+#addressForm {
+	width: 325px;
+	color: #5491DC;
+	font-weight: bold;
+}
+#addressForm label:nth-child(2) {
+	margin-top: .8em;
+}
+#addressForm label, #addressForm input {
+	display: block;
+}
+#loanForm label {
+	display: inline-block;
+	font-size: .9em;	
+	text-align: right;
+	width: 175px;
+	margin: 0 .2em;
+}
+#loanForm input[type=text] {
+	display: inline-block;
+	width: 125px;	
+	margin: .7em 0;
+}
+#loanForm input[type=submit] {
+	margin-left: 180px;
+}
+
+/* tabSection Styles */
+#tabSection {
+	width: 550px;
+	height: 550px;
+	background: #F7B64B;
+	border-radius: 5px;
+	position: relative;
+	padding: 0;
+	margin: 0 0 0 50px;
+}
+
+/* Tabs styles */
+.tabHide {
+	display: none;
+}
+#tabSection ul {
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	top: 10px;
+	left: 5px;
+}
+#tabSection li {
+	font-size: .8em;
+	font-weight: bold;
+	color: #5491DC;
+	cursor: pointer;
+	display: inline-block;
+	background: #fff;
+	padding: 1em 2em;
+	border-radius: 5px 5px 0 0;
+}
+#tabSection li.currentTab {
+	color: #433E9C;
+}
+#tabSection div {
+	padding: 10px;
+	background: #DDD;
+	margin: 50px 0 0 0;
+	height: 500px;
+	border-radius: 0 0 5px 5px;
 }

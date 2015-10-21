@@ -1,0 +1,9 @@
+{
+	"name" : "Realtor_Application",
+	"version" : "0.0.5",
+	"author" : "Brian Koscielniak",
+	"dependencies" : {
+		"connect" : "*",
+		"serve-static" : "*"
+	}
+}

@@ -30,7 +30,7 @@ function calcMonthlyPayments(){
 	
 	for (var i=0; i<userDataArr.length; i++){
 	/* Error handling for loanForm*/
-	// EDIT NOTES: What if the user enters punctuation in the number (example 1,000.50) or addeds the number as a string "100" you must check for these aswell.
+	// TODO: What if the user enters punctuation in the number (example 1,000.50) or addeds the number as a string "100" you must check for these aswell.
 		try { 
 			if (userDataArr[i] === interestDataField){
 				// Interest special case

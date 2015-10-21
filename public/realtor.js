@@ -69,8 +69,8 @@ var Calculator = {
 		R = Number(R);
 		T = Number(T);
 		// Look at this line of code below. It took me like 3 hours to figure out mortgage math, and 2 more to write it in JavaScript!
-		// Pro-tip: the caret( ^ ) symbol in JavaScript does NOT mean mathmatical power.
 		return this.toDollarFormat(P*((1-(1/(1+((R/100)/12))))/((1/(1+((R/100)/12)))-Math.pow((1/(1+((R/100)/12))),(T+1)))));
+		// Pro-tip: the caret( ^ ) symbol in JavaScript does NOT mean mathmatical power, use Math object pow method instead
 	},
 	toDollarFormat : function(n){
 		console.log(n);
@@ -81,6 +81,19 @@ var Calculator = {
 		return n;
 	}
 }
+
+/* google map scripts */
+// This script was STOLE!
+function initialize() {
+	var mapCanvas = document.getElementById('map');
+	var mapOptions = {
+		center: new google.maps.LatLng(42.5403, -84.5463),
+		zoom: 8,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	}
+	var map = new google.maps.Map(mapCanvas, mapOptions)
+}
+google.maps.event.addDomListener(window, 'load', initialize);
 
 
 ///////////// Zillow content //////////

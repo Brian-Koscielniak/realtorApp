@@ -31,6 +31,9 @@ body {
 section {
 	float: left;
 }
+section:nth-of-type(1){
+	width: 33%;
+}
 main {
 	padding: 1.4em 1em;
 	height: 600px;

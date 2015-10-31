@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="realtorStyles.css">
-
 	<title>Realtor Application</title>
 </head>
 <body>
@@ -12,7 +11,7 @@
 	</header>
 	<main>
 		<section>
-			<form id="addressForm" method="get" autocomplete="on">
+			<form id="addressForm" method="post" autocomplete="on">
 				<fieldset>
 					<legend>Enter Property Address</legend>
 					<label for="address">Address:</label><input type="text" name="address" placeholder="100 Boredway" required autofocus />
@@ -24,7 +23,9 @@
 			</form>
 			<input type="button" value="Add Property To List"/>
 			<h1>My Properties List</h1>
-			<div id="zpl"></div>
+			<div id="zpl">
+				<div id="response"></div>
+			</div>
 		</section>
 		<section id="tabSection">
 			<ol>
@@ -51,9 +52,12 @@
 			</div>			
 		</section>
 	</main>
+	<div id="allZillowData"><div>
 </body>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript" src="ajax.js"></script>
 <script type="text/javascript" src="realtor.js"></script>
+
 </html>
 <!--
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 -->

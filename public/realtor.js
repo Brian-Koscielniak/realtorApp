@@ -84,6 +84,7 @@ var Calculator = {
 
 /* google map scripts */
 // This script was STOLE!
+/*
 function initialize() {
 	var mapCanvas = document.getElementById('map');
 	var mapOptions = {
@@ -94,70 +95,69 @@ function initialize() {
 	var map = new google.maps.Map(mapCanvas, mapOptions)
 }
 google.maps.event.addDomListener(window, 'load', initialize);
-
-
-///////////// Zillow content //////////
-var zwsid = "X1-ZWz1a2t5ohptzf_4pyss";
-var address = document.querySelector("#addressForm input:nth-of-type(1)");
-var zip = document.querySelector("#addressForm input:nth-of-type(4)");
-
-function getz(){
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange=function(){
-		document.getElementById("zpl").innerHTML = "hello";
-	}
-}
-
-//	http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=&address=2114+Bigelow+Ave&citystatezip=Seattle%2C+WA
-
-function XHRObj(){
-	var xhr = new XMLHttpRequest();
-	return xhr;
-}
-document.getElementById("afs").addEventListener("click", function(){
-	var xhr = new XHRObj();
-	var zurl = "http://www.zillow.com/webservice/GetSearchResults.htm";
-	var params = ("zws-id=" + zwsid + "&address=" + address.value + "&citystatezip=" + zip.value);
-
-	xhr.open("POST", 'zurl', true);
-	xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-	xhr.setRequestHeader('Content-length', params.length);
-	xhr.onreadystatechange = function(){
-		console.log(xhr.readyState);
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			
-		}
-	xhr.send(params);
-	}
-}, true);
-
-
-/*function loadDoc() {
-	console.log("inside func");
-	var xhttp, xmlDoc, txt, x, i;
-	var zurl = "http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=";
-	zurl += (zwsid + "&address=" + address.value + "&citystatezip=" + zip.value);
-//console.log(xhttp, xmlDoc, txt, x, i, zurl);
-	xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		//if (xhttp.readyState == 4 && xhttp.status == 200) {
-			xmlDoc = xhttp.responseXML;
-console.log(xmlDoc);
-			txt = "";
-			x = xmlDoc.getElementsByTagName("zpid");
-console.log(zpid);
-			for (i = 0; i < x.length; i++) {
-				txt = txt + x[i].childNodes[0].nodeValue + "<br>";
-				console.log("deepest");
-			}
-			document.getElementById("demo").innerHTML = txt;
-		//}
-	}
-	xhttp.open("GET", "zurl", true);
-	//xhttp.send();
-}
 */
 
+/* Zillow Ajax scripts */
+var afs = document.getElementById('afs');
+var response = document.getElementById('response');
+var userInput = document.querySelectorAll('#addressForm input');
+
+afs.addEventListener('click', sendRequest, false);
+
+function sendRequest(){
+	var zillowUrl = buildUrl();
+	console.log(zillowUrl);
+	var data = encodeURIComponent(zillowUrl);
+/*
+	var data = "";
+	for (var i=0; i<userInput.length-1;i++){
+		data += userInput[i].value;
+		data += "^^";
+	}
+*/
+	console.log(data);
+	Ajax.sendRequest('/rest', handleRequest, data);
+}
+var zillowXml;
+function handleRequest(req){
+	var azd = document.getElementById('allZillowData');
+	azd.innerHTML = req.responseText;
+	zillowXml = req.responseText;
+	zillowXml = textToXML(zillowXml);
+
+	function textToXML (text) {
+	      try {
+	        var xml = null;
+	        if ( window.DOMParser ) {
+	          var parser = new DOMParser();
+	          xml = parser.parseFromString( text, "text/xml" );
+	          var found = xml.getElementsByTagName( "parsererror" );
+	          if ( !found || !found.length || !found[ 0 ].childNodes.length ) {
+	            return xml;
+	          }
+	          return null;
+	        } else {
+	          xml = new ActiveXObject( "Microsoft.XMLDOM" );
+	          xml.async = false;
+	          xml.loadXML( text );
+	          return xml;
+	        }
+	      } catch (e) {
+	        console.log(e.error)
+	      }
+	}
+}
+function buildUrl(){
+	var zwsid = "X1-ZWz1a2t5ohptzf_4pyss";
+	var address = userInput[0].value;
+	var citystatezip = userInput[1].value + "+" + userInput[2].value + "+" + userInput[3].value;
+	// Add a looping function to remove or replace all spaces	
+	return "".concat("http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=",zwsid,"&address=",address,"&citystatezip=",citystatezip);
+}
 
 
-
+/* Property list scripts */
+function addProperty(){
+	var adr = zillowXml.getElementsByTagName('text')[0].innerHTML;
+	response.innerHTML = adr;
+}

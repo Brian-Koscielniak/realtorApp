@@ -1,6 +1,21 @@
-// I don't know how this works, but it does....
-var connect = require('connect');
-var serveStatic = require('serve-static');
-connect().use(serveStatic(__dirname)).listen(80); // I change from port 8080 to port 80
+var express = require('express');
+var request = require('request');
+var bodyParser = require('body-parser');
+var app = express();
 
-console.log("Server is listening...");
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(express.static('public'));
+
+app.get('/', function(req, res){
+	res.sendFile("realtor.html", {'root': __dirname + "/public"});
+});
+app.post("/rest", function(req, res){
+	request(req.body.data, function (error, response, body) {
+	  if (!error && response.statusCode === 200) {
+	    res.send(body);
+	  }
+	});
+});
+app.listen(3000);
+console.log("Running on port 3000");

@@ -3,7 +3,6 @@
 	"version" : "0.0.5",
 	"author" : "Brian Koscielniak",
 	"dependencies" : {
-		"connect" : "*",
-		"serve-static" : "*"
+		"express": "*"
 	}
 }

@@ -21,11 +21,9 @@
 					<input id="afs" type="button" name="submit" value="Submit"/>
 				</fieldset>
 			</form>
-			<input type="button" value="Add Property To List"/>
+			<input type="button" id="addBTN" value="Add Property To List"/>
 			<h1>My Properties List</h1>
-			<div id="zpl">
-				<div id="response"></div>
-			</div>
+			<div id="zpl"> </div>
 		</section>
 		<section id="tabSection">
 			<ol>
@@ -48,16 +46,27 @@
 					</form>
 			</div>			
 			<div class="tabHide">
-				<p>A table will go here</p>	
+				<table id="compsTable">
+					<thead>
+						<tr>
+							<th>Address</th>
+							<th>City</th>
+							<th>State</th>
+							<th>Zip</th>
+							<th>Amount</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
 			</div>			
 		</section>
 	</main>
-	<div id="allZillowData"><div>
+	<div id="allZillowData"></div>
 </body>
-<script type="text/javascript" src="ajax.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript" src="Ajax.js"></script>
 <script type="text/javascript" src="realtor.js"></script>
 
 </html>
 <!--
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 -->

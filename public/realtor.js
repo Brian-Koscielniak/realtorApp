@@ -83,81 +83,211 @@ var Calculator = {
 }
 
 /* google map scripts */
-// This script was STOLE!
-/*
-function initialize() {
-	var mapCanvas = document.getElementById('map');
+// 	
+var lat = 40, lng = -80;
+
+function mapInit() {
+// These code are provided by the Api and are needed for it to work.
+	var mapCanvas = document.getElementById('map'); // This is mine
 	var mapOptions = {
-		center: new google.maps.LatLng(42.5403, -84.5463),
+		center: new google.maps.LatLng(lat, lng), // The 'lat' and 'lng' var are also mine
 		zoom: 8,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	}
 	var map = new google.maps.Map(mapCanvas, mapOptions)
 }
-google.maps.event.addDomListener(window, 'load', initialize);
-*/
+google.maps.event.addDomListener(window, 'load', mapInit);
+
 
 /* Zillow Ajax scripts */
-var afs = document.getElementById('afs');
-var response = document.getElementById('response');
-var userInput = document.querySelectorAll('#addressForm input');
-
-afs.addEventListener('click', sendRequest, false);
-
-function sendRequest(){
-	var zillowUrl = buildUrl();
-	console.log(zillowUrl);
-	var data = encodeURIComponent(zillowUrl);
-/*
-	var data = "";
-	for (var i=0; i<userInput.length-1;i++){
-		data += userInput[i].value;
-		data += "^^";
-	}
-*/
-	console.log(data);
-	Ajax.sendRequest('/rest', handleRequest, data);
-}
 var zillowXml;
-function handleRequest(req){
-	var azd = document.getElementById('allZillowData');
-	azd.innerHTML = req.responseText;
+var propertyInput = document.querySelectorAll('#addressForm input');
+var afs = document.getElementById('afs'); // "Address Form Sumbit" button
+afs.addEventListener('click', sendSearch, false);
+
+function sendSearch(){
+	// Zillow wants a url, so one is made
+	var zillowUrl = buildUrl("search"); 
+
+	// This is needed.....? For reasons.
+	var data = encodeURIComponent(zillowUrl);
+
+	// Routing powers Activate!
+	Ajax.sendRequest('/rest', handleSearch, data);
+}
+	
+function sendComps(){
+	// Zillow wants a url, so one is made
+	var zillowUrl = buildUrl("comps");
+
+	// This is needed.....? For reasons.
+	var data = encodeURIComponent(zillowUrl);
+
+	// Routing powers Activate!
+	Ajax.sendRequest('/rest', handleComps, data);
+}
+
+function handleSearch(req){
+	// Getting that Zillow back, Mmm mmmm tasty!
 	zillowXml = req.responseText;
 	zillowXml = textToXML(zillowXml);
 
-	function textToXML (text) {
-	      try {
-	        var xml = null;
-	        if ( window.DOMParser ) {
-	          var parser = new DOMParser();
-	          xml = parser.parseFromString( text, "text/xml" );
-	          var found = xml.getElementsByTagName( "parsererror" );
-	          if ( !found || !found.length || !found[ 0 ].childNodes.length ) {
-	            return xml;
-	          }
-	          return null;
-	        } else {
-	          xml = new ActiveXObject( "Microsoft.XMLDOM" );
-	          xml.async = false;
-	          xml.loadXML( text );
-	          return xml;
-	        }
-	      } catch (e) {
-	        console.log(e.error)
-	      }
+	lat = Number(zillowXml.getElementsByTagName('latitude')[0].innerHTML);
+	lng = Number(zillowXml.getElementsByTagName('longitude')[0].innerHTML);
+	sendComps();
+	mapInit();
+}
+
+function handleComps(req){
+	var azd = document.getElementById('allZillowData'); // PRODUCTION CODE: DELETE 
+	azd.innerHTML = req.responseText; // PRODUCTION CODE: DELETE 
+
+	// Getting them Comps, yeah yeah boi!!
+	zillowXml = req.responseText;
+	zillowXml = textToXML(zillowXml);
+	
+	buildCompsTable();
+}
+
+function buildUrl(service){
+	// I probably shouldn't have this id just sitting around client side...
+	var zwsid = "X1-ZWz1a2t5ohptzf_4pyss";
+	if (service === "search"){
+		// Get user property input 
+		var address = propertyInput[0].value;
+		var citystatezip = propertyInput[1].value + "+" + propertyInput[2].value + "+" + propertyInput[3].value;
+
+		// It seems Zillow is smart enough to not need to replace space with +. I'll let them figure it out!
+		return "".concat("http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=",zwsid,"&address=",address,"&citystatezip=",citystatezip);
+
+	} else if (service === "comps"){
+		//
+		return "".concat("http://www.zillow.com/webservice/GetComps.htm?zws-id=",zwsid,"&zpid=",zillowXml.getElementsByTagName('zpid')[0].innerHTML,"&count=15");
 	}
 }
-function buildUrl(){
-	var zwsid = "X1-ZWz1a2t5ohptzf_4pyss";
-	var address = userInput[0].value;
-	var citystatezip = userInput[1].value + "+" + userInput[2].value + "+" + userInput[3].value;
-	// Add a looping function to remove or replace all spaces	
-	return "".concat("http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=",zwsid,"&address=",address,"&citystatezip=",citystatezip);
+
+function textToXML (text) {
+/* This function is code provided by Shaper, becuase well... What am I going to do different? */
+      try {
+	var xml = null;
+	if ( window.DOMParser ) {
+	  var parser = new DOMParser();
+	  xml = parser.parseFromString( text, "text/xml" );
+	  var found = xml.getElementsByTagName( "parsererror" );
+	  if ( !found || !found.length || !found[ 0 ].childNodes.length ) {
+	    return xml;
+	  }
+	  return null;
+	} else {
+	  xml = new ActiveXObject( "Microsoft.XMLDOM" );
+	  xml.async = false;
+	  xml.loadXML( text );
+	  return xml;
+	}
+      } catch (e) {
+	console.log(e.error)
+      }
 }
 
 
 /* Property list scripts */
+// Set up the 'Add Properties To List' feature.
+var zpl = document.getElementById('zpl'); // "Zillow Property List", is a page div that will be populated with a single list
+var addBTN = document.getElementById("addBTN");	
+addBTN.addEventListener("click", addProperty, false);
+
 function addProperty(){
-	var adr = zillowXml.getElementsByTagName('text')[0].innerHTML;
-	response.innerHTML = adr;
+	// The property information must be extracted from Zillow XML, and converted to JSON
+	var property = {
+		"street":zillowXml.getElementsByTagName('street')[0].innerHTML,
+		"city":zillowXml.getElementsByTagName('city')[0].innerHTML,
+		"state":zillowXml.getElementsByTagName('state')[0].innerHTML,
+		"zipcode":zillowXml.getElementsByTagName('zipcode')[0].innerHTML
+		};
+
+	// This will place that property information into local web storage using the Zillow 'zpid' number as the key.
+	localStorage[zillowXml.getElementsByTagName('zpid')[0].innerHTML] = JSON.stringify(property);
+
+	buildPropertyList();
+}
+
+function removeProperty(){
+/* Remove property feature works great, and takes minimal code, alls that has to be done is unstore the property from the local web 
+storage and rebuild the page elements. Note that 'this.parentNode.id' is this key associated with the local storage value */
+	localStorage.removeItem([this.parentNode.id]);
+	buildPropertyList();
+}
+
+function viewProperty(){
+	// Parse out the data into usable format.
+	var property = JSON.parse(localStorage[this.parentNode.id])
+	
+	// Reset the address form data, with data from parsed local storage.
+	propertyInput[0].value = property['street'];
+	propertyInput[1].value = property['city'];
+	propertyInput[2].value = property['state'];
+	propertyInput[3].value = property['zipcode'];
+
+	// Re-send Zillow Ajax request
+	sendSearch();
+}
+
+function buildPropertyList(){
+	// Duplicates can be prevented, simply by set the content to nothing and rebuilding all content everytime function is called.
+	zpl.innerHTML = "";
+
+	// Creating the list element
+	var propertyList = document.createElement('ul');
+
+	// Iterate through localStorage for the purpose of adding a list item for every property stored.
+	for (i=0; i<localStorage.length;i++){
+		// Because the property information was "stringify'd" it must be parsed so it can be displayed
+		var property = JSON.parse(localStorage[localStorage.key(i)])
+		property = "".concat(property['street']," ",property['city']," ",property['state']," ",property['zipcode']);
+
+		// Setting up the 'view' button.
+		var viewBTN = document.createElement('span')
+		viewBTN.appendChild(document.createTextNode("[ view ] "));
+		viewBTN.addEventListener('click', viewProperty, false);
+
+		// Setting up the 'remove' button
+		var removeBTN = document.createElement('span')
+		removeBTN.appendChild(document.createTextNode("[ remove ] "));
+		removeBTN.addEventListener('click', removeProperty, false);
+
+		// Creating the list item
+		var li = document.createElement('li');
+		li.setAttribute('id', localStorage.key(i)); // This page element is associated with the zpid, for later 'remove' feature
+		li.appendChild(viewBTN);
+		li.appendChild(removeBTN);
+		li.appendChild(document.createTextNode(property));
+
+		// Adding the item to the list
+		propertyList.appendChild(li);
+	}
+
+	// And of course, appending the property list to the page.
+	zpl.appendChild(propertyList);
+}
+(function(){
+/* This self-invoking anonymous function's purpose is to populate the 'My Properties List'. By having this bit of code, the 'My 
+Properties List' section will always contain any zillow data stored in local storage, even on page reload, multiple tabs/windows, etc. */
+	buildPropertyList();
+})();
+
+/* Comps Table Scripts */
+function buildCompsTable(){
+console.log("build call");
+	var compsBody = document.querySelector("#compsTable tbody");
+	compsBody.innerHTML = "";
+	var zillowCompsArr = (zillowXml.getElementsByTagName("comp"));
+	for (i=0;i<zillowCompsArr.length;i++){
+		var row = document.createElement("tr");
+		row.innerHTML += "".concat("<td>",zillowCompsArr[i].childNodes[2].childNodes[0].innerHTML,"</td>"); // This will get the value Street from Zillow Comps Xml
+		row.innerHTML += "".concat("<td>",zillowCompsArr[i].childNodes[2].childNodes[1].innerHTML,"</td>"); // This will get the value City from Zillow Comps Xml
+		row.innerHTML += "".concat("<td>",zillowCompsArr[i].childNodes[2].childNodes[2].innerHTML,"</td>"); // This will get the value State from Zillow Comps Xml
+		row.innerHTML += "".concat("<td>",zillowCompsArr[i].childNodes[2].childNodes[3].innerHTML,"</td>"); // This will get the value Zip from Zillow Comps Xml
+		row.innerHTML += "".concat("<td>",zillowCompsArr[i].childNodes[3].childNodes[0].innerHTML,"</td>"); // This will get the value Amount from Zillow Comps Xml
+		compsBody.appendChild(row);
+	}
 }

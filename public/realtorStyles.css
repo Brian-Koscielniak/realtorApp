@@ -14,10 +14,12 @@ Gray: #DDD
 --------------------------
 main styles
 header 
+Porperty list
 form styles
 map 
 tabsection
 tab
+Comps Table
 ----------------------- */
 
 /* main styles */
@@ -67,6 +69,25 @@ header h1 {
 	padding: .8em .3em;
 	font-size: 1.5em;
 	color: #fff;
+}
+/* Property list */
+#zpl {
+	font-family: Arial;
+	font-size: .8em;
+	position: relative;
+	top: 1em;
+}
+#zpl ul, #zpl li {
+	padding: .1em 0 0 0;	
+	margin: 0;	
+	list-style-type: none;
+}
+#zpl span {
+	color: #5491DC;
+}
+#zpl span:hover, #zpl span:active {
+	cursor: pointer;
+	text-decoration: underline;
 }
 
 /* form styles */
@@ -123,7 +144,7 @@ input[type=submit]{
 	color: red;
 	position: absolute;
 }
-span {
+form span {
 	width: 100%;
 	margin: 2em auto;
 	font-size: 2em;
@@ -179,3 +200,28 @@ span {
 	height: 500px;
 	border-radius: 0 0 5px 5px;
 }
+
+/* Comps Table */
+#compsTable {
+	border-collapse: collapse;
+	width: 100%;
+}
+#compsTable thead {
+	font-weight: bold;
+	background: #5491DC;
+	color: white;
+}
+#compsTable th {
+	text-align: center;
+	padding: .2em;
+}
+#compsTable td {
+	border: 1px solid #F7B64B;
+	padding: .2em;
+}
+
+
+
+
+
+

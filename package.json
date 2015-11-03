@@ -1,8 +1,29 @@
 {
-	"name" : "Realtor_Application",
-	"version" : "0.0.5",
-	"author" : "Brian Koscielniak",
-	"dependencies" : {
-		"express": "*"
-	}
+  "name": "realtor_application",
+  "version": "1.0.0",
+  "author": "Brian Koscielniak",
+  "dependencies": {
+    "async": "^1.5.0",
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "fs": "0.0.2",
+    "jade": "^1.11.0",
+    "request": "^2.65.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "An application for looking up real-estate information",
+  "main": "server.js",
+  "devDependencies": {},
+  "keywords": [
+    "estate",
+    "realtor",
+    "realty",
+    "property",
+    "loan",
+    "housing",
+    "zillow"
+  ],
+  "license": "GPL-3.0"
 }

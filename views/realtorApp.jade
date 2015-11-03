@@ -1,0 +1,15 @@
+doctype html
+html(lang='en-US')
+	head
+		meta(charset='utf-8')
+		link(rel='stylesheet' type='text/css' href='realtorStyles.css')
+		title Realtor Application
+	body
+		header
+			h1 My Properties
+		main
+			section !{addressForm} !{propList} 
+			section#tabSection !{tabs}
+		script(type="text/javascript" src="https://maps.googleapis.com/maps/api/js")
+		script(type="text/javascript" src="Ajax.js")
+		script(type="text/javascript" src="realtor.js")

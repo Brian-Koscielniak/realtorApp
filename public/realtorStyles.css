@@ -89,6 +89,18 @@ header h1 {
 	cursor: pointer;
 	text-decoration: underline;
 }
+#propList {
+	position: relative;
+}
+#propList p {
+	display: inline-block;
+	width: 200px;
+	font-size: .7em;
+	color: red;
+	position: absolute;
+	top: 5px;
+	left: 120px;
+}
 
 /* form styles */
 fieldset {
@@ -134,7 +146,7 @@ input[type=submit]{
 	width: 125px;	
 	margin: .7em 0;
 }
-#loanForm input[type=submit] {
+#loanForm input[type=button] {
 	margin-left: 180px;
 }
 #loanForm p {
@@ -144,7 +156,7 @@ input[type=submit]{
 	color: red;
 	position: absolute;
 }
-form span {
+#loanForm span {
 	width: 100%;
 	margin: 2em auto;
 	font-size: 2em;
@@ -155,7 +167,7 @@ form span {
 #map {
 	width: 100%;
 	height: 100%;
-	background: #ccc;
+	background: #DDD;
 }
 
 /* tabSection Styles */
@@ -205,6 +217,9 @@ form span {
 #compsTable {
 	border-collapse: collapse;
 	width: 100%;
+}
+#compsTable caption {
+	text-align: left;
 }
 #compsTable thead {
 	font-weight: bold;

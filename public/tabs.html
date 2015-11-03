@@ -1,0 +1,29 @@
+<ol>
+	<li id="1" class="currentTab">Map</li>
+	<li id="2">Calc</li>
+	<li id="3">Comps</li>
+</ol>
+
+<div class="tab">
+	<section id="map">A map will appear here when a property is found.</section>
+</div>			
+
+<div class="tabHide">
+		<form id="loanForm" method="get" autocomplete="off">
+			<fieldset>
+				<legend>Loan Calculator</legend>
+				<label for="loanAmount">Loan Amount:</label><input type="text" name="loanAmount" /></br>
+				<label for="interest">Interest:</label><input type="text" name="interest" /></br>
+				<label for="numMonth">Number of Months:</label><input type="text" name="numMonth" /></br>
+				<input type="button" name="submit" value="Get Monthly Amount" onclick="calcMonthlyPayments(); return false;"/>
+			</fieldset>
+		</form>
+		<article id="loanTotal"></article>
+</div>			
+
+<div class="tabHide">
+	<table id="compsTable">
+		<caption>Property comparision information will be displayed here.</caption>
+	</table>
+</div>			
+<div id="azd"></div>

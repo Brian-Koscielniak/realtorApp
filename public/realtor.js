@@ -45,13 +45,19 @@ function calcMonthlyPayments(){
 			userDataArr[i].parentNode.insertBefore(errPara, userDataArr[i].nextSibling);
 		}
 	}
-	var resultSpan = document.querySelectorAll("#tabSection span");
-	for (var i=0; i<resultSpan.length; i++){ // Removes previous loanForm calculator output, to prevent duplicates
-		resultSpan[i].parentNode.removeChild(resultSpan[i]);
+	var result = document.querySelectorAll("#tabSection p");
+	for (var i=0; i<result.length; i++){ // Removes previous loanForm calculator output, to prevent duplicates
+		result[i].parentNode.removeChild(result[i]);
 	}
-	document.querySelector("#tabSection div:nth-of-type(2)").appendChild(document.createElement("span"));
 	if (isErr == false){ // If isErr is true then loanForm data was not valid, do not calculate loan
-		document.querySelector("#tabSection span").appendChild(document.createTextNode("Next Payment: $"+Calculator.compoundInterest(loanDataField.value, interestDataField.value, monthDataField.value)));
+	//console.log(document.getElementById("loanTotal"));
+		var resultElem = document.createElement("p");
+		var totalTxt = document.createTextNode("Next Payment: $"+Calculator.compoundInterest(loanDataField.value, interestDataField.value, monthDataField.value));
+		resultElem.appendChild(totalTxt);
+		var loanForm = document.getElementById("loanForm");
+		loanForm.appendChild(resultElem);
+	} else {
+		console.log("something went wrong");
 	}
 }
 var Calculator = {
@@ -73,11 +79,11 @@ var Calculator = {
 		// Pro-tip: the caret( ^ ) symbol in JavaScript does NOT mean mathmatical power, use Math object pow method instead
 	},
 	toDollarFormat : function(n){
-		console.log(n);
 		// Round to penny
 		n = Math.round(n*100)/100;	
 		// Find '.' if . and only 1 after add a zero, if no . move on
 		// find '.' or end of string count 3 back recursivly add comma every three
+		console.log(n);
 		return n;
 	}
 }
@@ -91,7 +97,7 @@ function mapInit() {
 	var mapCanvas = document.getElementById('map'); // This is mine
 	var mapOptions = {
 		center: new google.maps.LatLng(lat, lng), // The 'lat' and 'lng' var are also mine
-		zoom: 8,
+		zoom: 12,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	}
 	var map = new google.maps.Map(mapCanvas, mapOptions)

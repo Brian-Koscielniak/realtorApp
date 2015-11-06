@@ -1,0 +1,12 @@
+form#addressForm(method="post", name="addressFrom", autocomplete="on", action="/rest")
+	fieldset
+		legend Enter Property Address
+		label(for="address") Address:
+		input(type="text", name="address", placeholder="100 Boredway", required, autofocus)
+		label(for="city") City:
+		input(type="text", name="city", placeholder="New York", required)
+		label(for="state") State:
+		input(type="text", name="state", placeholder="NY", required)
+		label(for="zip") Zip:
+		input(type="text", name="zip", placeholder="12345", pattern="^[0-9]{5}$", required)
+		input#afs(type="submit", name="submit", value="Submit")

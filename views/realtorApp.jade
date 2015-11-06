@@ -2,14 +2,23 @@ doctype html
 html(lang='en-US')
 	head
 		meta(charset='utf-8')
+		meta(name="author", content="Brian Koscielniak")
+		meta(name="description", content="Simple and clean real-estate look up tool")
 		link(rel='stylesheet' type='text/css' href='realtorStyles.css')
 		title Realtor Application
 	body
 		header
 			h1 My Properties
 		main
-			section !{addressForm} !{propList} 
-			section#tabSection !{tabs}
-		script(type="text/javascript" src="https://maps.googleapis.com/maps/api/js")
-		script(type="text/javascript" src="Ajax.js")
-		script(type="text/javascript" src="realtor.js")
+			section 
+				include ../public/addressForm 
+				include ../public/propertyList
+			section#tabSection !{tabs} 
+		div#zillowBranding
+			img#zillowBrandingImage( src="http://www.zillow.com/widgets/GetVersionedResource.htm?path=/static/logos/Zillowlogo_150x40.gif", 
+				width="150", height="40", alt="Zillow Real Estate Search")
+			p &copy; Zillow, Inc., 2006-2014.
+		script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js")
+		script(type="text/javascript", src="Ajax.js")
+		script(type="text/javascript", src="realtor.js")
+		include ../public/footer

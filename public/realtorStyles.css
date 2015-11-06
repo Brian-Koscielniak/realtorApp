@@ -20,6 +20,8 @@ map
 tabsection
 tab
 Comps Table
+Zillow Branding
+footer
 ----------------------- */
 
 /* main styles */
@@ -59,10 +61,12 @@ header {
 	margin: 0;
 	background: #570F12;
 	height: 100px;
-	background: -webkit-linear-gradient(left, #570f12, #570f12, #FFF); 
-	background: -o-linear-gradient(right, #570f12, #570f12, #FFF); 
-	background: -moz-linear-gradient(right, #570f12, #570f12, #FFF); 
-	background: linear-gradient(to right, #570f12, #570f12, #FFF); 
+	background-image: url("source/house.png"), -webkit-linear-gradient(left, #570f12, #570f12, #FFF); 
+	background-image: url("source/house.png"), -o-linear-gradient(right, #570f12, #570f12, #FFF); 
+	background-image: url("source/house.png"), -moz-linear-gradient(right, #570f12, #570f12, #FFF); 
+	background-image: url("source/house.png"), linear-gradient(to right, #570f12, #570f12, #FFF); 
+	background-repeat: no-repeat;
+	background-position: top right;
 }
 header h1 {
 	margin: 0;
@@ -70,6 +74,7 @@ header h1 {
 	font-size: 1.5em;
 	color: #fff;
 }
+
 /* Property list */
 #zpl {
 	font-family: Arial;
@@ -91,6 +96,10 @@ header h1 {
 }
 #propList {
 	position: relative;
+	top: 1em;
+}
+#propList h1 {
+	margin-top: .5em;
 }
 #propList p {
 	display: inline-block;
@@ -161,6 +170,11 @@ input[type=submit]{
 	margin: 2em auto;
 	font-size: 2em;
 }
+#loanTotal {
+	text-align: center;
+	font-size: 1em;
+	padding: 1em;
+}
 
 /* map */
 /*// Be Careful not to mess up the styles of this outside resource */
@@ -182,6 +196,9 @@ input[type=submit]{
 }
 
 /* Tabs styles */
+.info {
+	font-size: .9em;
+}
 .tabHide {
 	display: none;
 }
@@ -211,6 +228,7 @@ input[type=submit]{
 	margin: 50px 0 0 0;
 	height: 500px;
 	border-radius: 0 0 5px 5px;
+	overflow: auto;
 }
 
 /* Comps Table */
@@ -233,10 +251,31 @@ input[type=submit]{
 #compsTable td {
 	border: 1px solid #F7B64B;
 	padding: .2em;
+	font-size: 0.9em;
+}
+
+/* Zillow Branding */
+#zillowBranding * {
+	display: inline;
+	font-size: .8em;
+}
+#zillowBranding {
+	color: #999;
+	position: relative;
+	bottom: 20px;
+}
+#zillowBrandingImage {
+	position: relative;
+	bottom: -6px;
 }
 
 
-
-
-
-
+/* footer styles */
+#footer {
+	float: left;
+	width: 100%;
+	text-align: center;
+	font-size: .7em;
+	line-height: 2em;	
+	color: #999;
+}

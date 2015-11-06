@@ -44,17 +44,7 @@ app.post("/rest", function(req, res){
 	  }
 	});
 });
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-*/
+app.get("*", function(req, res){
+	res.set('Content-Type', 'text/html')
+	res.send(new Buffer('<html><body>Nothing here. <a href="/">Back to Realtor Application</a></body></html>'));
+});

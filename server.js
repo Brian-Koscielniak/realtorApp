@@ -13,38 +13,34 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.listen(1337);
-console.log("Running on port 1337");
+// Unless specified otherwide, server runs on port 3000
+process.argv[2] ? port = process.argv[2] : port = 3000;
+app.listen(port, function(){
+	console.log('Server is running on port %d', port);
+});
 
 app.get('/', function(req, res){
-	// These Variables will hold html content
-	var addressForm, propList, tabs;
+	var tabs;
 
 	// The function that will be called once all content is read. 
 	function renderPage(){
-		res.render("realtorApp.jade", {addressForm : addressForm,  propList : propList, tabs : tabs});
+		res.render("realtorApp.jade", {tabs : tabs});
 	}
-
-	// Welcome to callback hell!
-	fs.readFile(__dirname + '/public/addressForm.html', 'utf-8', function (err,data) {
-		addressForm = data;
-		fs.readFile(__dirname + '/public/propertyList.html', 'utf-8', function (err,data) {
-			propList = data;
-			fs.readFile(__dirname + '/public/tabs.html', 'utf-8', function (err,data) {
-				tabs = data;
-				renderPage();
-			});
-		});
+	fs.readFile(__dirname + '/public/tabs.html', 'utf-8', function (err,data) {
+		tabs = data;
+		renderPage();		
 	});
 });
 app.post("/rest", function(req, res){
+// Handle the request
 	request(req.body.data, function (error, response, body) {
-	  if (!error && response.statusCode === 200) {
-	    res.send(body);
-	  }
+		if (!error && response.statusCode === 200) {
+			res.send(body);
+		}
 	});
 });
 app.get("*", function(req, res){
+// Stand in for 404
 	res.set('Content-Type', 'text/html')
 	res.send(new Buffer('<html><body>Nothing here. <a href="/">Back to Realtor Application</a></body></html>'));
 });

@@ -103,7 +103,6 @@ var Calculator = {
 
 		// This is the compound interest formula, JavaScipt style (also converted to dollar format)
 		return this.toDollarFormat(P*((1-(1/(1+((R/100)/12))))/((1/(1+((R/100)/12)))-Math.pow((1/(1+((R/100)/12))),(T+1)))));
-			// Pro-tip: the caret( ^ ) symbol in JavaScript does NOT mean mathmatical power, use Math object pow method instead
 	},
 	toDollarFormat : function(n){
 		// Round to penny
@@ -302,7 +301,6 @@ function buildCall(service){
 }
 
 function textToXML (text) {
-// This function is code provided on course website.
       try {
 	var xml = null;
 	if ( window.DOMParser ) {
